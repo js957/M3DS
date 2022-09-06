@@ -1,0 +1,38 @@
+version: '3'
+services:
+  material:
+    image: m3ds/material-service:latest
+    container_name: mddds-material
+    restart: always
+    networks:
+      - mddds-net
+    ports:
+      - 8012:8012
+    env_file: .env
+    environment:
+      TZ: Asia/Shanghai
+
+  file-service:
+    image: m3ds/file-service:latest
+    container_name: mddds-file-service
+    restart: always
+    networks:
+      - mddds-net
+    ports:
+      - 8011:8011
+    env_file: .env
+    environment:
+      TZ: Asia/Shanghai
+
+  collection:
+    image: m3ds/collection-service:latest
+    container_name: mddds-collection
+    restart: always
+    networks:
+      - mddds-net
+    ports:
+      - 8013:8013
+    env_file: .env
+    environment:
+      TZ: Asia/Shanghai
+

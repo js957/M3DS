@@ -1,0 +1,138 @@
+spring:
+  cloud:
+    bus:
+      trace:
+        enabled: true
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:localhost}
+    port: ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USERNAME:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6388}
+    lettuce:
+      pool:
+        max-active: 300
+    #password: ${REDIS_PASSWORD:123456}
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:${DATASOURCE_DBTYPE:mysql}://${DATASOURCE_HOST:localhost}:${DATASOURCE_PORT:13307}/dp_stimulus_material?characterEncoding=UTF-8&useUnicode=true&useSSL=false
+    username: ${DATASOURCE_USERNAME:root}
+    password: ${DATASOURCE_PASSWORD:root123}
+  zipkin:
+    enabled: true
+    sender:
+      type: rabbit
+  sleuth:
+    sampler:
+      probability: 1.0
+  mvc:
+    throw-exception-if-no-handler-found: true
+  servlet:
+    multipart:
+      max-request-size: "300MB"
+      max-file-size: "500MB"
+  http:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 300MB
+  jackson:
+    time-zone: GMT+8
+#  resources:
+#    add-mappings: false
+
+jetcache:
+  statIntervalMinutes: 15
+  areaInCacheName: false
+  hidePackages: com.ynufrd.mddds
+  local:
+    # 默认2小时本地缓存
+    default:
+      type: caffeine
+      keyConvertor: fastjson
+      expireAfterWriteInMillis: 3600000
+      expireAfterAccessInMillis: 1800000
+    # 長時本地緩存，主要用于要求时效一般
+    longTime:
+      type: caffeine
+      keyConvertor: fastjson
+      expireAfterWriteInMillis: 300000
+      expireAfterAccessInMillis: 180000
+    # 短時本地緩存，主要用于要求时效较高的配置
+    shortTime:
+      type: caffeine
+      keyConvertor: fastjson
+      expireAfterWriteInMillis: 60000
+      expireAfterAccessInMillis: 40000
+  remote:
+    # 默认2小时的远程缓存
+    default:
+      type: redis
+      expireAfterWriteInMillis: 43200000
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6388}
+    # 长时远程緩存，主要用于要求时效要求一般的集中式缓存
+    longTime:
+      type: redis
+      expireAfterWriteInMillis: 7200000
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6388}
+    # 短時远程緩存，主要用于要求时效较高的集中式缓存
+    shortTime:
+      type: redis
+      expireAfterWriteInMillis: 300000
+      keyConvertor: fastjson
+      valueEncoder: kryo
+      valueDecoder: kryo
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6388}
+
+server:
+  tomcat:
+    max-http-form-post-size: 100MB
+    max-http-post-size: 100MB
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    com.ynufrd.mddds.materialservice: debug
+    java.sql.PreparedStatement: debug
+  path: logs/
+  file:
+    max-size: 1GB
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-field: deleted # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      update-strategy: not_empty
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000

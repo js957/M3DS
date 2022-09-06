@@ -1,0 +1,47 @@
+version: '3'
+services:
+  redis: 
+    image: redis
+    container_name: mddds-redis
+    restart: always
+    volumes:
+      - ../data/redis:/data
+    environment:
+      - REDIS_PASSWORD=123456
+    networks:
+      - mddds-net
+    ports:
+      - 6388:6379
+    env_file: .env
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: mddds-rabbitmq
+    restart: always
+    volumes:
+      - ../data/rabbitmq:/var/lib/rabbitmq/mnesia
+    networks:
+      - mddds-net
+    ports:
+      - 5672:5672
+      - 15672:15672
+    env_file: .env
+
+  mysql:
+    image: mysql
+    container_name: mddds-mysql
+    restart: always
+    networks:
+      - mddds-net
+    ports:
+      - 13307:3306
+    volumes:
+      - ../data/mysql:/var/lib/mysql
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: root123
+    env_file: .env
+
+networks:
+  mddds-net:
+    external: false

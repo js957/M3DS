@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.ynufrd.mddds.collectionservice.CollectionServiceApplicat
+ ion
+

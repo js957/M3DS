@@ -1,0 +1,13 @@
+version: '3'
+services:
+  gateway-web:
+    image: m3ds/gateway-web:latest
+    container_name: mddds-gateway-web
+    restart: always
+    networks:
+      - mddds-net
+    ports:
+      - 8443:8443
+    env_file: .env
+    environment:
+      TZ: Asia/Shanghai

@@ -1,0 +1,51 @@
+spring:
+  minio:
+    endpoint: http://${MINIO_HOST:localhost}:${MINIO_PORT:9000}
+    accessKey: admin
+    secretKey: admin123456
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:localhost}
+    port: ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USERNAME:guest}
+    password: ${RABBIT_MQ_PASSWORD:guest}
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6388}
+    lettuce:
+      pool:
+        max-active: 300
+    #password: ${REDIS_PASSWORD:123456}
+  mvc:
+    throw-exception-if-no-handler-found: true
+  servlet:
+    multipart:
+      max-request-size: "300MB"
+      max-file-size: "500MB"
+  http:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 300MB
+
+
+  jackson:
+      time-zone: GMT+8
+logging:
+  level:
+    com.ynufrd.mddds.fileservice: debug
+  path: logs/${spring.application.name}
+  file:
+    max-size: 1GB
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+server:
+  tomcat:
+    max-http-form-post-size: 100MB
+    max-http-post-size: 100MB

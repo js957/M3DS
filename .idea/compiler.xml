@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="gateway-web" />
+        <module name="core" />
+        <module name="test" />
+        <module name="web" />
+        <module name="collection-service" />
+        <module name="material-service" />
+        <module name="file-service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="collection-service" options="" />
+      <module name="file-service" options="" />
+      <module name="gateway-web" options="" />
+      <module name="material" options="" />
+      <module name="material-service" options="" />
+    </option>
+  </component>
+</project>

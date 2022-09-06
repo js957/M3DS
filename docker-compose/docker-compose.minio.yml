@@ -1,0 +1,19 @@
+version: '3'
+services:
+  minio: 
+    image: minio/minio
+    container_name: mddds-minio
+    restart: always
+    volumes:
+      - ../data/minio/data:/data
+      - ../data/minio/config:/root/.minio
+    environment:
+      - MINIO_ACCESS_KEY=admin
+      - MINIO_SECRET_KEY=admin123456
+    networks:
+      - mddds-net
+    ports:
+      - 9000:9000
+      - 9001:9001
+    command: server --address '0.0.0.0:9000'  --console-address '0.0.0.0:9001' /data
+    env_file: .env
