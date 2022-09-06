@@ -5,6 +5,7 @@
     <parent>
         <artifactId>webapps</artifactId>
         <groupId>com.ynufrd.mddds</groupId>
+        <relativePath>../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>

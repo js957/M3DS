@@ -6,7 +6,7 @@
         <groupId>com.ynufrd.mddds</groupId>
         <artifactId>material</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>material-service</artifactId>
