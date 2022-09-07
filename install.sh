@@ -21,11 +21,11 @@ esac
 
 echo '==================1.1清理当前脚本启动的容器和产生的镜像(可选的)=============='
 #清理当前脚本启动的容器和产生的镜像(可选的)
-#docker stop mddds-redis mddds-rabbitmq mddds-mysql
+docker stop mddds-redis mddds-rabbitmq mddds-mysql
 #docker rm mddds-redis mddds-rabbitmq mddds-mysql
 #docker image rm rabbitmq:management-alpine redis mysql
 
-#docker stop mddds-material mddds-file-service mddds-collection mddds-gateway-web
+docker stop mddds-material mddds-file-service mddds-collection mddds-gateway-web
 #docker rm mddds-material mddds-file-service mddds-collection mddds-gateway-web
 #docker image rm m3ds/material-service:latest m3ds/file-service:latest m3ds/collection-service:latest m3ds/gateway-web:latest
 
@@ -98,7 +98,7 @@ cd docker-compose
 
 #启动网关服务
 docker-compose -f docker-compose.yml -f docker-compose.spring-gateway.yml up -d gateway-web
-
+docker-compose -f docker-compose.yml up -d nginx
 
 
 #回到根目录
@@ -150,7 +150,7 @@ cd -
 cd docker-compose
 
 #启动材料管理服务
-docker-compose -f docker-compose.yml -f docker-compose.system.yml up -d material
+docker-compose -f docker-compose.yml -f docker-compose.system.yml up -d material-service
 
 
 #回到根目录
@@ -184,6 +184,6 @@ cd -
 cd docker-compose
 
 #启动材料管理服务
-docker-compose -f docker-compose.yml -f docker-compose.system.yml up -d collection
+docker-compose -f docker-compose.yml -f docker-compose.system.yml up -d collection-service
 #回到根目录
 cd -

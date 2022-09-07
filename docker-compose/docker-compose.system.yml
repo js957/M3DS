@@ -1,6 +1,6 @@
 version: '3'
 services:
-  material:
+  material-service:
     image: m3ds/material-service:latest
     container_name: mddds-material
     restart: always
@@ -24,7 +24,7 @@ services:
     environment:
       TZ: Asia/Shanghai
 
-  collection:
+  collection-service:
     image: m3ds/collection-service:latest
     container_name: mddds-collection
     restart: always
