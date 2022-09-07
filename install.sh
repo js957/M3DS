@@ -127,22 +127,22 @@ echo '==================6.构建镜像并启动材料管理相关服务=========
 cd ./material/material-service
 mvn package && mvn docker:build
 #确认初始化材料管理相关服务的DB:./material/db
-echo '你可以立即去部署材料管理相关服务的DB(脚本路径:./material/db),然后回来继续...'
-read -r -p "确认部署材料管理相关服务的DB部署好了吗? [Y/n] " authDbConfirm
-case $authDbConfirm in
-    [yY][eE][sS]|[yY])
-		echo "Yes 继续执行"
-		;;
-    [nN][oO]|[nN])
-		echo "No 终止执行"
-		exit 1
-       	;;
-    *)
-		echo "Invalid input... 终止执行"
-		exit 1
-		;;
-esac
-
+#echo '你可以立即去部署材料管理相关服务的DB(脚本路径:./material/db),然后回来继续...'
+#read -r -p "确认部署材料管理相关服务的DB部署好了吗? [Y/n] " authDbConfirm
+#case $authDbConfirm in
+#    [yY][eE][sS]|[yY])
+#		echo "Yes 继续执行"
+#		;;
+#    [nN][oO]|[nN])
+#		echo "No 终止执行"
+#		exit 1
+#       	;;
+#    *)
+#		echo "Invalid input... 终止执行"
+#		exit 1
+#		;;
+#esac
+echo 'material-service build over'
 #回到根目录
 cd -
 
@@ -152,22 +152,22 @@ echo '==================7.构建镜像并启动数据采集管理相关服务===
 cd ./collection/collection-service
 mvn package && mvn docker:build
 #确认初始化数据采集管理相关服务的DB:./collection/db
-echo '你可以立即去部署数据采集管理相关服务的DB(脚本路径:./collection/db),然后回来继续...'
-read -r -p "确认部署数据采集管理相关服务的DB部署好了吗? [Y/n] " authDbConfirm
-case $authDbConfirm in
-    [yY][eE][sS]|[yY])
-		echo "Yes 继续执行"
-		;;
-    [nN][oO]|[nN])
-		echo "No 终止执行"
-		exit 1
-       	;;
-    *)
-		echo "Invalid input... 终止执行"
-		exit 1
-		;;
-esac
-
+#echo '你可以立即去部署数据采集管理相关服务的DB(脚本路径:./collection/db),然后回来继续...'
+#read -r -p "确认部署数据采集管理相关服务的DB部署好了吗? [Y/n] " authDbConfirm
+#case $authDbConfirm in
+#    [yY][eE][sS]|[yY])
+#		echo "Yes 继续执行"
+#		;;
+#    [nN][oO]|[nN])
+#		echo "No 终止执行"
+#		exit 1
+#       	;;
+#    *)
+#		echo "Invalid input... 终止执行"
+#		exit 1
+#		;;
+#esac
+echo 'collection-service build over'
 #回到根目录
 cd -
 

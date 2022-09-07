@@ -2,7 +2,7 @@ version: '3'
 services:
   material-service:
     image: m3ds/material-service:latest
-    container_name: mddds-material
+    container_name: mddds-material-service
     restart: always
     networks:
       - mddds-net
@@ -26,7 +26,7 @@ services:
 
   collection-service:
     image: m3ds/collection-service:latest
-    container_name: mddds-collection
+    container_name: mddds-collection-service
     restart: always
     networks:
       - mddds-net
