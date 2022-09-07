@@ -21,7 +21,7 @@ esac
 
 echo '==================1.1清理当前脚本启动的容器和产生的镜像(可选的)=============='
 #清理当前脚本启动的容器和产生的镜像(可选的)
-docker stop mddds-redis mddds-rabbitmq mddds-mysql mddds-nginx
+docker stop mddds-redis mddds-rabbitmq mddds-mysql mddds-nginx mddds-nacos-standalone
 #docker rm mddds-redis mddds-rabbitmq mddds-mysql
 #docker image rm rabbitmq:management-alpine redis mysql
 
