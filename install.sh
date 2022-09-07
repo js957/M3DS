@@ -146,15 +146,6 @@ esac
 #回到根目录
 cd -
 
-#去docker-compose目录
-cd docker-compose
-
-#启动材料管理服务
-docker-compose -f docker-compose.yml -f docker-compose.system.yml up -d material-service
-
-
-#回到根目录
-cd -
 
 echo '==================7.构建镜像并启动数据采集管理相关服务=================='
 #构建镜像:数据采集管理相关服务
@@ -184,6 +175,10 @@ cd -
 cd docker-compose
 
 #启动材料管理服务
+docker-compose -f docker-compose.yml -f docker-compose.system.yml up -d material-service
+#启动材料管理服务
 docker-compose -f docker-compose.yml -f docker-compose.system.yml up -d collection-service
 #回到根目录
 cd -
+
+echo "部署完毕"
