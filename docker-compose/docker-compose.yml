@@ -54,8 +54,6 @@ services:
       - ../data/nginx/data/:/usr/share/nginx/html/
       - ../data/nginx/log/:/var/log/nginx/
     privileged: true
-    depends_on:
-      - gateway-web
     restart: always
     networks:
       - mddds-net
