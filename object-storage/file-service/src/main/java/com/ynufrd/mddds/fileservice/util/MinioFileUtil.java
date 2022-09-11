@@ -69,7 +69,7 @@ public class MinioFileUtil {
                     originalFilename.substring(originalFilename.lastIndexOf("."));
         }else{
             fileName = fileName + "_" +
-                System.currentTimeMillis() + "_" + originalFilename;
+                System.currentTimeMillis() + "_" + originalFilename.substring(originalFilename.lastIndexOf("."));
         }
         //判断存储桶是否存在,不存在则创建
         createBucket(bucketName);
