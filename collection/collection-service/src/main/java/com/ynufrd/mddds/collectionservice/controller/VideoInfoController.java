@@ -47,6 +47,9 @@ public class VideoInfoController {
         videoInfo.setBucketName(Constant.COLLECTION);
         videoInfo.setUrlPreview(Constant.getPreviewUri(result.getData().toString(),Constant.COLLECTION));
         videoInfo.setUrlDownload(Constant.getDownloadUri(result.getData().toString(),Constant.COLLECTION));
+        log.info("user:"+ videoInfo.getUserId()
+                +"上传实验id:"+videoInfo.getTempExpId()
+                +"。文件:"+ videoInfo.getName());
         return Result.success(videoInfoServiceImpl.save(videoInfo));
     }
 
