@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <p>
@@ -48,12 +49,15 @@ public class CapsController {
     @ApiImplicitParam(name = "capsForm", value = "新增Caps表单", required = true, dataType = "CapsForm")
     @PostMapping
     public Result add(@Valid CapsForm capsForm) {
+        // 先进行文件上传并获得文件名
         Result<String> result = fileServiceProvider.upload(capsForm.getFile(), Constant.MATERIAL_CAPS);
+        // 组装完整的文件对象并保存
         Caps caps = capsForm.toPo(Caps.class);
-        caps.setUrlPreview(Constant.getPreviewUri(result.getData().toString(),Constant.MATERIAL_CAPS));
+        caps.setUrlPreview(Constant.getPreviewUri(result.getData().toString(), Constant.MATERIAL_CAPS));
         caps.setUrlDownload(Constant.getDownloadUri(result.getData().toString(), Constant.MATERIAL_CAPS));
         caps.setBucketName(Constant.MATERIAL_CAPS);
         capsServiceImpl.saveOrUpdate(caps);
+        // 同步插入材料表
         Material material = new Material(Constant.MATERIAL_CAPS,
                 Constant.MATERIAL_TYPE_PICTURE,
                 caps.getId(),
@@ -65,6 +69,10 @@ public class CapsController {
     @ApiImplicitParam(paramType = "path", name = "id", value = "Caps材料ID", required = true, dataType = "string")
     @DeleteMapping(value = "/{id}")
     public Result delete(@PathVariable String id) {
+        // 删除材料表的数据然后再删除此表数据
+        materialServiceImpl.remove(new QueryWrapper<Material>()
+                .eq("material_name", Constant.MATERIAL_CAPS)
+                .eq("m_id", id));
         return Result.success(capsServiceImpl.removeById(id));
     }
 
@@ -77,6 +85,18 @@ public class CapsController {
     public Result update(@PathVariable String id, @Valid @RequestBody CapsForm capsForm) {
         Caps caps = capsForm.toPo(Caps.class);
         caps.setId(id);
+        // 如果对文件进行了更新那么材料表预览也要同步更新
+        if (capsForm.getFile() != null) {
+            Result<String> result = fileServiceProvider.upload(capsForm.getFile(), Constant.MATERIAL_CAPS);
+            caps.setUrlPreview(Constant.getPreviewUri(result.getData().toString(), Constant.MATERIAL_CAPS));
+            caps.setUrlDownload(Constant.getDownloadUri(result.getData().toString(), Constant.MATERIAL_CAPS));
+            caps.setBucketName(Constant.MATERIAL_CAPS);
+            Material material = materialServiceImpl.getOne(new QueryWrapper<Material>()
+                .eq("material_name", Constant.MATERIAL_CAPS)
+                .eq("m_id", caps.getId()));
+            material.setUrlPreview(caps.getUrlPreview());
+            materialServiceImpl.updateById(material);
+        }
         return Result.success(capsServiceImpl.updateById(caps));
     }
 
@@ -84,8 +104,10 @@ public class CapsController {
     @ApiImplicitParam(paramType = "path", name = "id", value = "Caps材料ID", required = true, dataType = "string")
     @GetMapping(value = "/{id}")
     public Result get(@PathVariable String id) {
+        // 获取材料信息功能用在用户选取材料创建实验的过程中，所以拿到整个对象返回就行
         return Result.success(capsServiceImpl.getById(id));
     }
+
 
     @ApiOperation(value = "查询Caps材料", notes = "根据条件查询Caps材料信息，简单查询")
     @ApiImplicitParam(paramType = "query", name = "name", value = "Caps材料名称", required = true, dataType = "string")
@@ -94,7 +116,7 @@ public class CapsController {
     )
     @GetMapping
     public Result query(@RequestParam String name) {
-        return Result.success(capsServiceImpl.list(new QueryWrapper<Caps>().like("name",name)));
+        return Result.success(capsServiceImpl.list(new QueryWrapper<Caps>().like("name", name)));
     }
 
     @ApiOperation(value = "搜索Caps材料", notes = "根据条件查询Caps材料信息")

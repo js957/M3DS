@@ -3,12 +3,16 @@ package com.ynufrd.mddds.materialservice.controller;
 
 import com.ynufrd.mddds.common.core.vo.Result;
 import com.ynufrd.mddds.materialservice.entity.form.CapsForm;
+import com.ynufrd.mddds.materialservice.entity.form.TemplateGroupQueryForm;
 import com.ynufrd.mddds.materialservice.entity.form.TemplateProcedureForm;
+import com.ynufrd.mddds.materialservice.entity.form.TemplateProcedureQueryForm;
+import com.ynufrd.mddds.materialservice.entity.param.TemplateProcedureQueryParam;
 import com.ynufrd.mddds.materialservice.entity.po.TemplateProcedure;
 import com.ynufrd.mddds.materialservice.service.ITemplateProcedureService;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -64,5 +68,23 @@ public class TemplateProcedureController {
         return Result.success(templateProcedureService.get(id));
     }
 
+
+    @ApiOperation(value = "搜索实验模板", notes = "根据条件查询实验模板")
+    @ApiImplicitParam(name = "templateProcedureQueryForm", value = "实验模板查询参数", required = true, dataType = "TemplateProcedureQueryForm")
+    @ApiResponses(
+            @ApiResponse(code = 200, message = "处理成功", response = Result.class)
+    )
+    @PostMapping(value = "/conditions")
+    public Result search(@Valid @RequestBody TemplateProcedureQueryForm templateProcedureQueryForm) {
+        /**
+        *@Param: [templateProcedureQueryForm]
+        *@Author: wjs
+        *@date: 21:41
+         * proName,createdTimeStart,createdTimeEnd,current,size
+        */
+        Page<TemplateProcedure> page = templateProcedureQueryForm.getPage();
+        TemplateProcedureQueryParam param = templateProcedureQueryForm.toParam(TemplateProcedureQueryParam.class);
+        return Result.success(templateProcedureService.page(page,param.build()));
+    }
 
 }
