@@ -41,7 +41,7 @@ public class TemplateGroupController {
         TemplateGroup lastGroup = templateGroupServiceImpl.getOne(
                 new QueryWrapper<TemplateGroup>()
                         .eq("temp_proce_id",templateGroup.getTempProceId())
-                        .orderByDesc("created_time")
+                        .orderByDesc("sequence","created_time")
                         .last("limit 1"));
         if(lastGroup == null){
             templateGroup.setSequence(1);

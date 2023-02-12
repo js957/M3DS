@@ -3,11 +3,14 @@ package com.ynufrd.mddds.materialservice.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ynufrd.mddds.common.core.vo.Result;
+import com.ynufrd.mddds.materialservice.config.Constant;
 import com.ynufrd.mddds.materialservice.entity.form.TemplateExperimentalForm;
 import com.ynufrd.mddds.materialservice.entity.form.TemplateExperimentalQueryForm;
 import com.ynufrd.mddds.materialservice.entity.form.TemplateGroupForm;
 import com.ynufrd.mddds.materialservice.entity.form.TemplateGroupQueryForm;
+import com.ynufrd.mddds.materialservice.entity.po.Material;
 import com.ynufrd.mddds.materialservice.entity.po.TemplateExperimental;
+import com.ynufrd.mddds.materialservice.exception.ObjectSelectValidationException;
 import com.ynufrd.mddds.materialservice.service.IMaterialService;
 import com.ynufrd.mddds.materialservice.service.ITemplateExperimentalService;
 import io.swagger.annotations.*;
@@ -42,6 +45,11 @@ public class TemplateExperimentalController {
     @PostMapping
     public Result add(@Valid TemplateExperimentalForm templateExperimentalForm) {
         TemplateExperimental templateExperimental = templateExperimentalForm.toPo(TemplateExperimental.class);
+        Material material = materialServiceImpl.getById(templateExperimental.getMaterialId());
+        if(material == null){
+            throw new ObjectSelectValidationException(material.getClass().getName(), Constant.DATA_NOT_IN_SQL);
+        }
+        templateExperimental.setType(material.getType());
         TemplateExperimental lastExperimental = templateExperimentalServiceImpl.getOne(
                 new QueryWrapper<TemplateExperimental>()
                         .eq("temp_group_id", templateExperimental.getTempGroupId())

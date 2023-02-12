@@ -27,6 +27,7 @@ public class TemplateExperimentalForm extends BaseForm<TemplateExperimental> {
     @ApiModelProperty(value = "实验名")
     private String expName;
 
+
     /**
      * 材料id
      */

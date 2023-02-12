@@ -25,4 +25,8 @@ public class Constant {
     public static String getDownloadUri(String fileName, String bucketName) {
         return "/file/download/" + fileName + "?bucketName=" + bucketName;
     }
+
+    //Exception feedback
+    public static final String DATA_NOT_IN_SQL = "数据不存在于数据库!";
+    public static final String DATA_INCONSISTENCY = "数据不一致!";
 }

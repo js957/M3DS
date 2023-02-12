@@ -22,11 +22,11 @@ esac
 echo '==================1.1清理当前脚本启动的容器和产生的镜像(可选的)=============='
 #清理当前脚本启动的容器和产生的镜像(可选的)
 docker stop mddds-redis mddds-rabbitmq mddds-mysql mddds-nginx mddds-nacos-standalone
-#docker rm mddds-redis mddds-rabbitmq mddds-mysql
+docker rm mddds-redis mddds-rabbitmq mddds-mysql mddds-nginx mddds-nacos-standalone
 #docker image rm rabbitmq:management-alpine redis mysql
 
 docker stop mddds-material mddds-file-service mddds-collection mddds-gateway-web
-#docker rm mddds-material mddds-file-service mddds-collection mddds-gateway-web
+docker rm mddds-material mddds-file-service mddds-collection mddds-gateway-web
 #docker image rm m3ds/material-service:latest m3ds/file-service:latest m3ds/collection-service:latest m3ds/gateway-web:latest
 
 echo '==================2.安装认证公共包到本地maven仓库=================='
