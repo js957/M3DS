@@ -27,17 +27,7 @@ public class GlobalExceptionHandlerAdvice extends DefaultGlobalExceptionHandlerA
         log.error(msg, ex);
         return Result.fail(msg);
     }
-    /**
-    *@Param:
-    *@Author: wjs
-    *@date: 16:08
-     * 处理其他未知异常
-    */
-    @ExceptionHandler(value = {Exception.class})
-    public Result handleException(Exception ex){
-        log.error(ex.getMessage());
-        return Result.fail(ex.getMessage());
-    }
+
 
 
 }
